@@ -1,0 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amakhrou <amakhrou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/18 20:40:38 by amakhrou          #+#    #+#             */
+/*   Updated: 2023/12/18 20:40:38 by amakhrou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../raycasting/cub3D.h"
+
+int	open_path(char *path, int permition)
+{
+	int	fd;
+
+	fd = open(path, permition);
+	if (fd <= 0)
+		ft_putstr_fd("Error: cant find file\n", 2);
+	return (fd);
+}
+
+t_map *init_map(char *path,t_parse *parse)
+{
+    t_map *map;
+	int fd;
+	int c;
+	
+	c = 0;
+    map = malloc(sizeof(t_map));
+	fd = open_path(path, O_RDONLY);
+    map->map = reads(path,parse, fd, c);
+	close(fd);
+    return (map);
+}
+
+void init_parse(t_parse *parse)
+{
+	// parse = malloc(sizeof(t_parse));
+
+	parse->C_value = NULL;
+	parse->F_value = NULL;
+	parse->NO_tex = NULL;
+	parse->SO_tex = NULL;
+	parse->EA_tex = NULL;
+	parse->WE_tex = NULL;
+    parse->line_size = 0;
+	parse->F_R = 0;
+	parse->F_G = 0;
+	parse->F_B = 0;
+	parse->C_R = 0;
+	parse->C_G = 0;
+	parse->C_B = 0;
+}
